@@ -4,7 +4,6 @@ import { DateTime } from "luxon";
 import { findNearestMunicipality } from "./components/map/functions";
 import { bearingToAzimuth, point } from "@turf/helpers";
 import { bearing } from "@turf/bearing";
-import { LineChart } from "@mui/x-charts";
 import { LinearProgress } from "@mui/material";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
   const [nearestPoint, setNearestPoint] = useState(undefined)
   const [nearestNextPoint, setNearestNextPoint] = useState(undefined)
   const [currentWind, setCurrentWind] = useState(undefined)
-  const [municipality, setMunicipality] = useState(undefined)
+  // const [municipality, setMunicipality] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
   const [resultOpen, setResultOpen] = useState(false)
@@ -28,7 +27,7 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
       const municipality = findNearestMunicipality(nearestPoint)
-      setMunicipality(municipality);
+      // setMunicipality(municipality);
       if (!municipality) {
         setLoading(false);
         return;
@@ -69,21 +68,21 @@ function App() {
     }
   }
 
-  const getDates = (d) => {
-    const dates = [];
-    for (const item of d) {
-      dates.push(item.time);
-    }
-    return dates;
-  }
+  // const getDates = (d) => {
+  //   const dates = [];
+  //   for (const item of d) {
+  //     dates.push(item.time);
+  //   }
+  //   return dates;
+  // }
 
-  const getData = (windItem) => {
-    const data = [];
-    for (const item of windItem) {
-      data.push(item.speed);
-    }
-    return data;
-  }
+  // const getData = (windItem) => {
+  //   const data = [];
+  //   for (const item of windItem) {
+  //     data.push(item.speed);
+  //   }
+  //   return data;
+  // }
 
   return (
     <div >
