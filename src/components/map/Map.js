@@ -20,16 +20,14 @@ function MovingMarker({ clickedPosition, setClickedPosition, setNearestPoint, se
     }
 
     return (
-        <Marker position={clickedPosition} icon={foodIcon}>
-        </Marker>
+        <Marker position={clickedPosition} icon={new Icon({
+            iconUrl: logo,
+            iconSize: [64, 64], // size of the icon
+            iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
+            popupAnchor: [0, -64] // point from which the popup should open relative to the iconAnchor
+        })} />
     )
 }
-const foodIcon = new Icon({
-    iconUrl: logo,
-    iconSize: [64, 64], // size of the icon
-    iconAnchor: [32, 64], // point of the icon which will correspond to marker's location
-    popupAnchor: [0, -64] // point from which the popup should open relative to the iconAnchor
-})
 
 
 export function Map({ nearestPoint, nearestNextPoint, setNearestPoint, setNearestNextPoint, bbox, debug }) {

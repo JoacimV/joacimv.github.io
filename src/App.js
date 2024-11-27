@@ -83,70 +83,69 @@ function App() {
   }
 
   return (
-    <div className="fixed-grid">
-      <div className="grid" style={{
-        height: "100vh",
-        "overflowY": "auto",
-      }}>
-        {loading ? <LinearProgress /> :
-          <pre>
-            <h1>{municipality?.Name}</h1>
-            <p>{tiderWaterStationName}</p>
+    <div >
+      <div style={{ position: 'absolute', zIndex: 401 }}      >
+        <div className="column">
+          {loading ? <LinearProgress /> :
             <div>
-              <div style={{ position: 'fixed' }}>
-                <p style={{ transform: `rotate(${currentWind?.direction}deg)` }}>⬇️</p>
+              <h1>{municipality?.Name}</h1>
+              <p>{tiderWaterStationName}</p>
+              <div>
+                <div style={{ position: 'fixed' }}>
+                  <p style={{ transform: `rotate(${currentWind?.direction}deg)` }}>⬇️</p>
+                </div>
               </div>
-            </div>
-            <br />
-            <p>{currentWind?.speed}m/s</p>
-            <p>{currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'}</p>
-            <pre>
-              {lowSpots.map(lowSpot => {
-                if (calculateChance(lowSpot.hours) === "Dårlig 👎") {
-                  return null;
-                }
-                return (
-                  <div className="card" key={lowSpot.height}>
-                    <div className="card-content">
-                      <div className="content">
-                        <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
-                        <p>Vandstand: {Math.round(lowSpot.height)}cm</p>
-                        <p style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
-                        <p>Hours: {lowSpot.hours}</p>
-                      </div>
+              <br />
+              <p>{currentWind?.speed}m/s</p>
+              <p>{currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'}</p>
+              <div>
+                {lowSpots.map(lowSpot => {
+                  if (calculateChance(lowSpot.hours) === "Dårlig 👎") {
+                    return null;
+                  }
+                  return (
+                    <div className="card" key={lowSpot.height}>
+                      <div className="card-content">
+                        <div className="content">
+                          <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
+                          <p>Vandstand: {Math.round(lowSpot.height)}cm</p>
+                          <p style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
+                          <p>Hours: {lowSpot.hours}</p>
+                        </div>
 
-                      <LineChart
-                        xAxis={[
-                          {
-                            id: 'barCategories',
-                            data: getDates(lowSpot?.windItem),
-                            scaleType: 'band',
-                          },
-                        ]}
-                        series={[
-                          {
-                            data: getData(lowSpot?.windItem),
-                          },
-                        ]}
-                        // width={800}
-                        height={200}
-                      />
+                        <LineChart
+                          xAxis={[
+                            {
+                              id: 'barCategories',
+                              data: getDates(lowSpot?.windItem),
+                              scaleType: 'band',
+                            },
+                          ]}
+                          series={[
+                            {
+                              data: getData(lowSpot?.windItem),
+                            },
+                          ]}
+                          // width={800}
+                          height={200}
+                        />
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-            </pre>
-          </pre>}
-        <Map
-          debug={debug}
-          nearestPoint={nearestPoint}
-          setNearestPoint={setNearestPoint}
-          nearestNextPoint={nearestNextPoint}
-          setNearestNextPoint={setNearestNextPoint}
-          setBbox={setBbox}
-          bbox={bbox}
-        />
+                  )
+                })}
+              </div>
+            </div>}
+        </div>
       </div>
+      <Map
+        debug={debug}
+        nearestPoint={nearestPoint}
+        setNearestPoint={setNearestPoint}
+        nearestNextPoint={nearestNextPoint}
+        setNearestNextPoint={setNearestNextPoint}
+        setBbox={setBbox}
+        bbox={bbox}
+      />
     </div >
   );
 }
