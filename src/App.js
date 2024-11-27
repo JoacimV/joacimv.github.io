@@ -17,6 +17,8 @@ function App() {
   const [municipality, setMunicipality] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
+  const [resultOpen, setResultOpen] = useState(false)
+
   const [debug, setDebug] = useState(false)
 
   useEffect(() => {
@@ -39,6 +41,7 @@ function App() {
       setTiderWaterStationName(json.tiderWaterStationName);
       setCurrentWind(json.currentWind);
       setLoading(false);
+      setResultOpen(true);
     }
     fetchData();
   }, [nearestPoint, nearestNextPoint])
@@ -84,36 +87,33 @@ function App() {
 
   return (
     <div >
-      <div style={{ position: 'absolute', zIndex: 401 }}      >
-        <div className="column">
-          {loading ? <LinearProgress /> :
-            <div>
-              <h1>{municipality?.Name}</h1>
-              <p>{tiderWaterStationName}</p>
+      {resultOpen ?
+        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="card"    >
+          <div className="column">
+            {loading ? <LinearProgress /> :
               <div>
-                <div style={{ position: 'fixed' }}>
-                  <p style={{ transform: `rotate(${currentWind?.direction}deg)` }}>⬇️</p>
-                </div>
-              </div>
-              <br />
-              <p>{currentWind?.speed}m/s</p>
-              <p>{currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'}</p>
-              <div>
-                {lowSpots.map(lowSpot => {
-                  if (calculateChance(lowSpot.hours) === "Dårlig 👎") {
-                    return null;
-                  }
-                  return (
-                    <div className="card" key={lowSpot.height}>
-                      <div className="card-content">
-                        <div className="content">
-                          <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
-                          <p>Vandstand: {Math.round(lowSpot.height)}cm</p>
-                          <p style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
-                          <p>Hours: {lowSpot.hours}</p>
-                        </div>
+                <button className="button is-warning" onClick={(() => setResultOpen(!resultOpen))}>Luk</button>
+                {/* <h1>{municipality?.Name}</h1> */}
+                <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
+                <span style={{ display: 'inline-block', transform: `rotate(${currentWind.direction}deg)`, transformOrigin: 'center center' }}>⬇️</span>
+                <span>{currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
+                <hr />
+                <div>
+                  {lowSpots.map(lowSpot => {
+                    if (calculateChance(lowSpot.hours) === "Dårlig 👎") {
+                      return null;
+                    }
+                    return (
+                      <div className="card" key={lowSpot.height}>
+                        <div className="card-content">
+                          <div className="content">
+                            <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
+                            <p title="Vandstand">🌊: {Math.round(lowSpot.height)}</p>
+                            <p title="Timer med pålandsvind">💨: {lowSpot.hours}</p>
+                            <p className="has-text-weight-medium" style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
+                          </div>
 
-                        <LineChart
+                          {/* <LineChart
                           xAxis={[
                             {
                               id: 'barCategories',
@@ -128,15 +128,15 @@ function App() {
                           ]}
                           // width={800}
                           height={200}
-                        />
+                        /> */}
+                        </div>
                       </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>}
-        </div>
-      </div>
+                    )
+                  })}
+                </div>
+              </div>}
+          </div>
+        </div> : null}
       <Map
         debug={debug}
         nearestPoint={nearestPoint}
