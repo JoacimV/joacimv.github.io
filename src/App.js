@@ -13,8 +13,6 @@ function App() {
   const [currentWind, setCurrentWind] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
-  const [resultOpen, setResultOpen] = useState(false)
-
   const [debug, setDebug] = useState(false)
 
   useEffect(() => {
@@ -24,7 +22,6 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
       const municipality = findNearestMunicipality(nearestPoint)
-      // setMunicipality(municipality);
       if (!municipality) {
         setLoading(false);
         return;
@@ -35,7 +32,6 @@ function App() {
       if (json.message) { // Something bad happened
         console.log(json.message);
         setLoading(false);
-        setResultOpen(false);
         return;
       }
       setBbox(json.boundingBox);
@@ -43,7 +39,6 @@ function App() {
       setTiderWaterStationName(json.tiderWaterStationName);
       setCurrentWind(json.currentWind);
       setLoading(false);
-      setResultOpen(true);
     }
     fetchData();
   }, [nearestPoint, nearestNextPoint])
@@ -63,7 +58,7 @@ function App() {
 
   return (
     <div >
-      <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} resultOpen={resultOpen} setResultOpen={setResultOpen} tiderWaterStationName={tiderWaterStationName} />
+      <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} tiderWaterStationName={tiderWaterStationName} />
       <Map
         debug={debug}
         nearestPoint={nearestPoint}

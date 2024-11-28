@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinearProgress } from '@mui/material';
 import { DateTime } from 'luxon';
-export function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots, setResultOpen, resultOpen }) {
+export function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots }) {
 
     const calculateChance = (hours) => {
         if (hours < 3) {
@@ -33,8 +33,6 @@ export function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots,
             <div className="column">
                 {loading ? <LinearProgress /> :
                     <div>
-                        <button className="button is-warning" onClick={(() => setResultOpen(!resultOpen))}>Luk</button>
-                        {/* <h1>{municipality?.Name}</h1> */}
                         <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
                         <span style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}>⬇️</span>
                         <span>{currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
