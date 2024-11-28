@@ -15,6 +15,7 @@ function App() {
   const [loading, setLoading] = useState(false)
 
   const [debug, setDebug] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     if (!nearestPoint) {
@@ -22,6 +23,7 @@ function App() {
     }
     const fetchData = async () => {
       setLoading(true);
+      setSidebarOpen(true);
       const municipality = findNearestMunicipality(nearestPoint)
       if (!municipality) {
         setLoading(false);
@@ -59,7 +61,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} tiderWaterStationName={tiderWaterStationName} />
+      <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} tiderWaterStationName={tiderWaterStationName} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <LeafletMap
         debug={debug}
         nearestPoint={nearestPoint}

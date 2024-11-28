@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateTime } from 'luxon';
 
-export default function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots }) {
+export default function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots, sidebarOpen, setSidebarOpen }) {
 
     const calculateChance = (hours) => {
         if (hours < 3) {
@@ -44,7 +44,9 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
         return spots;
     }
 
-    return (
+    if (!sidebarOpen) {
+        return null;
+    } else return (
         <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="box is-radiusless">
             <div className="column">
                 {loading ?
@@ -76,6 +78,7 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
                         </div>
                     </div> :
                     <div>
+                        <button className="delete is-pulled-right" onClick={() => setSidebarOpen(false)}></button>
                         <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
                         <span style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}>⬇️</span>
                         <span>{currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
