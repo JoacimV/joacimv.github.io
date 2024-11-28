@@ -35,6 +35,11 @@ function App() {
       const azimuth = bearingToAzimuth(bearing(point([nearestPoint.lng, nearestPoint.lat]), point([nearestNextPoint.lng, nearestNextPoint.lat])));
       const res = await fetch(`https://hayxmiy9qg.execute-api.eu-north-1.amazonaws.com/forecast?&position=${JSON.stringify({ longitude: nearestPoint.lng, latitude: nearestPoint.lat })}&municipalityId=${municipality.MunicipalityID}&azimuth=${azimuth}`);
       const json = await res.json();
+      if (json.message) { // Something bad happened
+        console.log(json.message);
+        setLoading(false);
+        return;
+      }
       setBbox(json.boundingBox);
       setLowSpots(json.spots)
       setTiderWaterStationName(json.tiderWaterStationName);

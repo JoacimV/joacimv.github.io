@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON } from "react-leaflet";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Icon } from 'leaflet'
 import dk from "../../resources/geojson/denmark-coastal-line.json"
 import municipalities from "../../resources/geojson/municipalities.json"

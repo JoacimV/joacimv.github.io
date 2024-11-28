@@ -1,6 +1,5 @@
 import { along } from "@turf/along";
 import { multiPolygon, point, lineString } from "@turf/helpers";
-import { pointsWithinPolygon } from "@turf/points-within-polygon";
 import { lineSplit } from "@turf/line-split";
 import { bboxPolygon } from "@turf/bbox-polygon";
 import { booleanPointOnLine } from "@turf/boolean-point-on-line";
