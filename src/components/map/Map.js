@@ -4,7 +4,7 @@ import { Icon } from 'leaflet'
 import dk from "../../resources/geojson/denmark-coastal-line.json"
 import municipalities from "../../resources/geojson/municipalities.json"
 import logo from "../../resources/images/marker-original.png"
-import { findNearestCoastline } from "./functions";
+import { findNearestCoastline } from "../../functions";
 
 function MovingMarker({ clickedPosition, setClickedPosition, setNearestPoint, setNearestNextPoint, setSplitLine, setSplitLine2 }) {
     useMapEvent('click', (e) => {

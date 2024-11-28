@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Map } from "./components/map/Map";
-import { DateTime } from "luxon";
-import { findNearestMunicipality } from "./components/map/functions";
+import { Map } from "./components/map/map";
 import { bearingToAzimuth, point } from "@turf/helpers";
 import { bearing } from "@turf/bearing";
-import { LinearProgress } from "@mui/material";
-
+import { Sidebar } from "./components/sidebar/sidebar";
+import { findNearestMunicipality } from "./functions";
 function App() {
   const [bbox, setBbox] = useState([0, 0, 0, 0]);
   const [tiderWaterStationName, setTiderWaterStationName] = useState(undefined);
@@ -13,7 +11,6 @@ function App() {
   const [nearestPoint, setNearestPoint] = useState(undefined)
   const [nearestNextPoint, setNearestNextPoint] = useState(undefined)
   const [currentWind, setCurrentWind] = useState(undefined)
-  // const [municipality, setMunicipality] = useState(undefined)
   const [loading, setLoading] = useState(false)
 
   const [resultOpen, setResultOpen] = useState(false)
@@ -64,84 +61,9 @@ function App() {
     }
   }, [])
 
-  const calculateChance = (hours) => {
-    if (hours < 3) {
-      return "Dårlig 👎";
-    } else if (hours < 7) {
-      return "Moderat 🤷";
-    } else if (hours > 10) {
-      return "God 👍";
-    }
-  }
-
-  // const getDates = (d) => {
-  //   const dates = [];
-  //   for (const item of d) {
-  //     dates.push(item.time);
-  //   }
-  //   return dates;
-  // }
-
-  // const getData = (windItem) => {
-  //   const data = [];
-  //   for (const item of windItem) {
-  //     data.push(item.speed);
-  //   }
-  //   return data;
-  // }
-
   return (
     <div >
-      {resultOpen ?
-        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="card is-radiusless">
-          <div className="column">
-            {loading ? <LinearProgress /> :
-              <div>
-                <button className="button is-warning" onClick={(() => setResultOpen(!resultOpen))}>Luk</button>
-                {/* <h1>{municipality?.Name}</h1> */}
-                <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
-                <span style={{ display: 'inline-block', transform: `rotate(${currentWind.direction}deg)`, transformOrigin: 'center center' }}>⬇️</span>
-                <span>{currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
-                <hr />
-                <div>
-                  {lowSpots.map(lowSpot => {
-                    if (calculateChance(lowSpot.hours) === "Dårlig 👎") {
-                      return null;
-                    }
-                    return (
-                      <div className="card" key={lowSpot.height}>
-                        <div className="card-content">
-                          <div className="content">
-                            <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
-                            <p title="Vandstand">🌊: {Math.round(lowSpot.height)}cm</p>
-                            <p title="Timer med pålandsvind">💨: {lowSpot.hours} timer</p>
-                            <p className="has-text-weight-medium" style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
-                          </div>
-
-                          {/* <LineChart
-                          xAxis={[
-                            {
-                              id: 'barCategories',
-                              data: getDates(lowSpot?.windItem),
-                              scaleType: 'band',
-                            },
-                          ]}
-                          series={[
-                            {
-                              data: getData(lowSpot?.windItem),
-                            },
-                          ]}
-                          // width={800}
-                          height={200}
-                        /> */}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>}
-          </div>
-        </div> : null}
+      <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} resultOpen={resultOpen} setResultOpen={setResultOpen} tiderWaterStationName={tiderWaterStationName} />
       <Map
         debug={debug}
         nearestPoint={nearestPoint}

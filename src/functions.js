@@ -5,8 +5,8 @@ import { bboxPolygon } from "@turf/bbox-polygon";
 import { booleanPointOnLine } from "@turf/boolean-point-on-line";
 import { nearestPointOnLine } from "@turf/nearest-point-on-line";
 import { booleanOverlap } from "@turf/boolean-overlap";
-import dk from "../../resources/geojson/denmark-coastal-line.json";
-import municipalities from "../../resources/geojson/municipalities.json";
+import dk from "./resources/geojson/denmark-coastal-line.json";
+import municipalities from "./resources/geojson/municipalities.json";
 
 
 export const findNearestMunicipality = (position) => {
