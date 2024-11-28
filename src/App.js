@@ -38,6 +38,7 @@ function App() {
       if (json.message) { // Something bad happened
         console.log(json.message);
         setLoading(false);
+        setResultOpen(false);
         return;
       }
       setBbox(json.boundingBox);
@@ -92,7 +93,7 @@ function App() {
   return (
     <div >
       {resultOpen ?
-        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="card"    >
+        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="card is-radiusless">
           <div className="column">
             {loading ? <LinearProgress /> :
               <div>
@@ -112,8 +113,8 @@ function App() {
                         <div className="card-content">
                           <div className="content">
                             <p>{DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.DATE_MED)} - {DateTime.fromISO(lowSpot.time).toLocaleString(DateTime.TIME_24_SIMPLE)}</p>
-                            <p title="Vandstand">🌊: {Math.round(lowSpot.height)}</p>
-                            <p title="Timer med pålandsvind">💨: {lowSpot.hours}</p>
+                            <p title="Vandstand">🌊: {Math.round(lowSpot.height)}cm</p>
+                            <p title="Timer med pålandsvind">💨: {lowSpot.hours} timer</p>
                             <p className="has-text-weight-medium" style={{ fontSize: 18 }}>Chance: {calculateChance(lowSpot.hours)}</p>
                           </div>
 
