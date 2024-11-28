@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON } from "react-leaflet";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from 'leaflet'
 import dk from "../../resources/geojson/denmark-coastal-line.json"
 import municipalities from "../../resources/geojson/municipalities.json"
@@ -56,7 +56,7 @@ export function Map({ nearestPoint, nearestNextPoint, setNearestPoint, setNeares
                     <GeoJSON data={municipalities} />
                     <GeoJSON data={splitLine} style={{ color: 'red' }} />
                     <GeoJSON data={splitLine2} style={{ color: 'green' }} />
-                    <Rectangle bounds={[[bbox[1], bbox[0]], [bbox[3], bbox[2]],]} pathOptions={{ color: 'white' }} />
+                    <Rectangle bounds={[[bbox[1], bbox[0]], [bbox[3], bbox[2]]]} pathOptions={{ color: 'white' }} />
                 </>
                 : null}
         </MapContainer>
