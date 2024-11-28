@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateTime } from 'luxon';
 
-export function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots }) {
+export default function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots }) {
 
     const calculateChance = (hours) => {
         if (hours < 3) {

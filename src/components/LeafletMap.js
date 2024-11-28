@@ -1,10 +1,10 @@
 import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON } from "react-leaflet";
+import { findNearestCoastline } from "../functions";
 import React, { useState } from "react";
 import { Icon } from 'leaflet'
-import dk from "../../resources/geojson/denmark-coastal-line.json"
-import municipalities from "../../resources/geojson/municipalities.json"
-import logo from "../../resources/images/marker-original.png"
-import { findNearestCoastline } from "../../functions";
+import dk from "../resources/geojson/denmark-coastal-line.json"
+import municipalities from "../resources/geojson/municipalities.json"
+import logo from "../resources/images/marker-original.png"
 
 function MovingMarker({ clickedPosition, setClickedPosition, setNearestPoint, setNearestNextPoint, setSplitLine, setSplitLine2 }) {
     useMapEvent('click', (e) => {
@@ -30,7 +30,7 @@ function MovingMarker({ clickedPosition, setClickedPosition, setNearestPoint, se
 }
 
 
-export function Map({ nearestPoint, nearestNextPoint, setNearestPoint, setNearestNextPoint, bbox, debug }) {
+export default function LeafletMap({ nearestPoint, nearestNextPoint, setNearestPoint, setNearestNextPoint, bbox, debug }) {
     const [clickedPosition, setClickedPosition] = useState(undefined)
     const [splitLine, setSplitLine] = useState(undefined)
     const [splitLine2, setSplitLine2] = useState(undefined)

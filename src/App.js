@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Map } from "./components/map/Map";
 import { bearingToAzimuth, point } from "@turf/helpers";
 import { bearing } from "@turf/bearing";
-import { Sidebar } from "./components/sidebar/Sidebar";
 import { findNearestMunicipality } from "./functions";
+import Sidebar from "./components/Sidebar";
+import LeafletMap from "./components/LeafletMap";
 
 function App() {
   const [bbox, setBbox] = useState([0, 0, 0, 0]);
@@ -60,7 +60,7 @@ function App() {
   return (
     <React.Fragment>
       <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} tiderWaterStationName={tiderWaterStationName} />
-      <Map
+      <LeafletMap
         debug={debug}
         nearestPoint={nearestPoint}
         setNearestPoint={setNearestPoint}
