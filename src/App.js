@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Map } from "./components/map/map";
+import { Map } from "./components/map/Map";
 import { bearingToAzimuth, point } from "@turf/helpers";
 import { bearing } from "@turf/bearing";
-import { Sidebar } from "./components/sidebar/sidebar";
+import { Sidebar } from "./components/sidebar/Sidebar";
 import { findNearestMunicipality } from "./functions";
 
 function App() {
