@@ -4,6 +4,7 @@ import { bearingToAzimuth, point } from "@turf/helpers";
 import { bearing } from "@turf/bearing";
 import { Sidebar } from "./components/sidebar/sidebar";
 import { findNearestMunicipality } from "./functions";
+
 function App() {
   const [bbox, setBbox] = useState([0, 0, 0, 0]);
   const [tiderWaterStationName, setTiderWaterStationName] = useState(undefined);
@@ -57,7 +58,7 @@ function App() {
   }, [])
 
   return (
-    <div >
+    <React.Fragment>
       <Sidebar currentWind={currentWind} loading={loading} lowSpots={lowSpots} tiderWaterStationName={tiderWaterStationName} />
       <Map
         debug={debug}
@@ -68,7 +69,7 @@ function App() {
         setBbox={setBbox}
         bbox={bbox}
       />
-    </div >
+    </React.Fragment>
   );
 }
 
