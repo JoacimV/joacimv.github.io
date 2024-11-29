@@ -80,8 +80,8 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
                     <div>
                         <button className="delete is-pulled-right" onClick={() => setSidebarOpen(false)}></button>
                         <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
-                        <span style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}>⬇️</span>
-                        <span>{currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
+                        <span className='is-size-4' style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}><i class='bx bx-down-arrow-alt'></i></span>
+                        <span>  {currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
                         <hr />
                         {renderLowSpots()}
                     </div>}
