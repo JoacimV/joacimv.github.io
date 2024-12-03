@@ -57,7 +57,7 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
     } else return (
         <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: matches ? '35vh' : '30vh', left: 10, bottom: 0 }}>
             {loading ?
-                <div className='box'>
+                <div className='box' style={!matches ? { minWidth: '95vw' } : { minWidth: '30vw' }}>
                     <h1 className="is-size-4 has-text-weight-bold is-skeleton">Henter data...</h1>
                     <hr />
                     <div className='card is-skeleton'>
