@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON, useMap } from "react-leaflet";
 import { findNearestCoastline } from "../functions";
 import React, { useState } from "react";
 import { Icon } from 'leaflet'
@@ -7,14 +7,28 @@ import municipalities from "../resources/geojson/municipalities.json"
 import logo from "../resources/images/marker-original.png"
 
 function MovingMarker({ clickedPosition, setClickedPosition, setNearestPoint, setNearestNextPoint, setSplitLine, setSplitLine2 }) {
-    useMapEvent('click', (e) => {
-        const { nearestPoint, nearestNextPoint, split } = findNearestCoastline(e.latlng);
-        setClickedPosition(e.latlng);
-        setNearestPoint(nearestPoint);
-        setNearestNextPoint(nearestNextPoint);
-        setSplitLine(split.features[0]);
-        setSplitLine2(split.features[1]);
+    let clickTimeout = null;  // Declare a variable to hold the timeout
+
+    const map = useMapEvent('click', (e) => {
+        if (clickTimeout) {
+            clearTimeout(clickTimeout);  // If it's a double-click, clear the timeout
+        }
+        clickTimeout = setTimeout(() => {
+            const { nearestPoint, nearestNextPoint, split } = findNearestCoastline(e.latlng);
+            setClickedPosition(e.latlng);
+            setNearestPoint(nearestPoint);
+            setNearestNextPoint(nearestNextPoint);
+            setSplitLine(split.features[0]);
+            setSplitLine2(split.features[1]);
+            map.setView({ lat: nearestPoint.lat, lng: nearestPoint.lng }, 10, { animate: true, duration: 1 })
+        }, 300);
     })
+    // This function prevents setting position, when double clicking
+    useMapEvent('dblclick', () => {
+        if (clickTimeout) {
+            clearTimeout(clickTimeout);  // Cancel the pending click event if it's a double-click
+        }
+    });
     if (!clickedPosition) {
         return null
     }
