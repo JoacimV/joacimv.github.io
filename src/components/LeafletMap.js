@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent, Marker, Rectangle, GeoJSON } from "react-leaflet";
 import { findNearestCoastline } from "../functions";
 import React, { useState } from "react";
 import { Icon } from 'leaflet'
