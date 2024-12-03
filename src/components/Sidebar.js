@@ -47,7 +47,7 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
     if (!sidebarOpen) {
         return null;
     } else return (
-        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '100vh', right: 0 }} className="box is-radiusless">
+        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '40vh', left: 10, bottom: 0 }} className="box">
             <div className="column">
                 {loading ?
                     <div>
