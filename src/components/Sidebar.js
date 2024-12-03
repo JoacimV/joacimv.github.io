@@ -4,13 +4,13 @@ import { DateTime } from 'luxon';
 export default function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots, sidebarOpen, setSidebarOpen }) {
 
     const calculateChance = (hours) => {
+        let result = 'God 👍'
         if (hours < 3) {
-            return "Dårlig 👎";
+            result = "Dårlig 👎";
         } else if (hours <= 7) {
-            return "Moderat 🤷";
-        } else if (hours >= 10) {
-            return "God 👍";
+            result = "Moderat 🤷";
         }
+        return result;
     }
 
     const renderLowSpots = () => {
