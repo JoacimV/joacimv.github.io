@@ -52,17 +52,8 @@ export default function LeafletMap({ nearestPoint, nearestNextPoint, setNearestP
     const [splitLine2, setSplitLine2] = useState(undefined)
 
     return (
-        <MapContainer
-            style={{ height: "100vh", width: "100%" }}
-            center={[56.0, 11.0]}
-            zoom={7}
-            maxZoom={18}
-            minZoom={7}
-        >
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
+        <MapContainer style={{ height: "100vh", width: "100%" }} center={[56.0, 11.0]} zoom={7} maxZoom={18} minZoom={7}        >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attributionControl={false} />
             <MovingMarker clickedPosition={clickedPosition} setClickedPosition={setClickedPosition} nearestPoint={nearestPoint} setNearestPoint={setNearestPoint} setNearestNextPoint={setNearestNextPoint} setSplitLine={setSplitLine} setSplitLine2={setSplitLine2} />
             {debug ?
                 <>

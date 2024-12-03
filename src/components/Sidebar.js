@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateTime } from 'luxon';
 
 /* eslint-disable react/prop-types */
 export default function Sidebar({ loading, tiderWaterStationName, currentWind, lowSpots, sidebarOpen, setSidebarOpen }) {
-
+    const [matches, setMatches] = useState(
+        window.matchMedia("(min-width: 768px)").matches
+    )
+    useEffect(() => {
+        window
+            .matchMedia("(min-width: 768px)")
+            .addEventListener('change', e => setMatches(e.matches));
+    }, []);
     const calculateChance = (hours) => {
         let result = 'God 👍'
         if (hours < 3) {
@@ -48,45 +55,31 @@ export default function Sidebar({ loading, tiderWaterStationName, currentWind, l
     if (!sidebarOpen) {
         return null;
     } else return (
-        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: '40vh', left: 10, bottom: 0 }} className="box">
-            <div className="column">
-                {loading ?
-                    <div>
-                        <h1 className="is-size-4 has-text-weight-bold">Henter data...</h1>
-                        <hr />
-                        <div className='card is-skeleton'>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
+        <div style={{ position: 'absolute', zIndex: 401, overflowY: 'auto', height: matches ? '35vh' : '30vh', left: 10, bottom: 0 }}>
+            {loading ?
+                <div className='box'>
+                    <h1 className="is-size-4 has-text-weight-bold is-skeleton">Henter data...</h1>
+                    <hr />
+                    <div className='card is-skeleton'>
                         <br />
-                        <div className='card is-skeleton'>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
                         <br />
-                        <div className='card is-skeleton'>
-                            <br />
-                            <br />
-                            <br />
-                        </div>
+                    </div>
+                    <div className='card is-skeleton'>
                         <br />
-                        <div className='card is-skeleton'>
-                            <br />
-                            <br />
-                            <br />
+                        <br />
+                    </div>
+                </div> :
+                <div>
+                    <div className='box' style={!matches ? { minWidth: '95vw' } : { minWidth: '30vw' }}>
+                        <div className='box'>
+                            <button className="delete is-pulled-right" onClick={() => setSidebarOpen(false)}></button>
+                            <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
+                            <span className='is-size-4' style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}><i className='bx bx-down-arrow-alt'></i></span>
+                            <span>  {currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
                         </div>
-                    </div> :
-                    <div>
-                        <button className="delete is-pulled-right" onClick={() => setSidebarOpen(false)}></button>
-                        <h1 className="is-size-4 has-text-weight-bold">{tiderWaterStationName}</h1>
-                        <span className='is-size-4' style={{ display: 'inline-block', transform: `rotate(${currentWind?.direction}deg)`, transformOrigin: 'center center' }}><i className='bx bx-down-arrow-alt'></i></span>
-                        <span>  {currentWind?.speed}ms ({currentWind?.isOnshore ? 'Pålandsvind' : 'Fralandsvind'})</span>
-                        <hr />
                         {renderLowSpots()}
-                    </div>}
-            </div>
-        </div>
+                    </div>
+                </div>}
+        </div >
     )
 }
